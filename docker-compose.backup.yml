@@ -1,0 +1,20 @@
+# versioning of the docker composer 
+version: '3'
+#Each container is reffered to as a service 
+services:
+  #name of the service/ container
+  node-docker:
+    #image to be used
+    build: .
+    #port to be exposed
+    ports:
+      - "3000:3000"
+    #volumes to be mounted
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    #environment variables
+    environment:
+      - PORT=3000
+    # env_file:
+    #   - ./.env
