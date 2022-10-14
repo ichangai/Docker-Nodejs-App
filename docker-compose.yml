@@ -1,13 +1,21 @@
 version: '3'
 services:
-#service1 node image
+#service1 nginx
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "3000:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./html:/usr/share/nginx/html
+#service2 node image
   node-docker:
     build: .
-    ports:
-      - "3000:3000"
     environment:
       - PORT=3000
-#service2 mongo image
+    depends_on:
+      - mongo  
+#service3 mongo image
   mongo:
     image: mongo
     ports:
@@ -15,9 +23,11 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=ichangai
       - MONGO_INITDB_ROOT_PASSWORD=mypassword
-    #   - MONGO_INITDB_DATABASE=sampledb
     volumes:
       - mongo-db:/data/db
-
+#service4 redis image
+  redis:
+    image: redis
+  
 volumes:
   mongo-db:   

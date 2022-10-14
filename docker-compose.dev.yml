@@ -1,5 +1,9 @@
 version: '3'
 services:
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "3000:80"
   node-docker:
     build:
       context: .
@@ -12,6 +16,7 @@ services:
       - NODE_ENV=development
       - MONGO_USER=ichangai
       - MONGO_PASSWORD=mypassword
+      - SESSION_SECRET=secret
     command: npm run dev
   #Mongo service  
   mongo:
